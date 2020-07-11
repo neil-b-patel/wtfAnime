@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   document.querySelector("#noBtn").addEventListener("click", populateTitle);
 });
 
-let myRecs = [];
+let myTitles = [],
+  myIds = [];
 
 function getRecs() {
   let query = `query ($search: String) { # define which variables will be used in the query (id)
@@ -19,6 +20,7 @@ function getRecs() {
                 edges {
                     node {
                         mediaRecommendation {
+                            id
                             title {
                                 romaji
                                 english
@@ -61,27 +63,42 @@ function handleResponse(response) {
 
 function handleRecData(data) {
   // create an array of anime ids from response
+
   data.data.Media.recommendations.edges.forEach((e) => {
     if (e.node.mediaRecommendation.title.english !== null) {
-      myRecs.push(e.node.mediaRecommendation.title.english);
+      myTitles.push(e.node.mediaRecommendation.title.english);
     } else {
-      myRecs.push(e.node.mediaRecommendation.title.romaji);
+      myTitles.push(e.node.mediaRecommendation.title.romaji);
     }
+    myIds.push(e.node.mediaRecommendation.id);
   });
 
   document.querySelector("#search").style.display = "none";
-//   document.querySelector("#info").style.display = "none";
+  //   document.querySelector("#info").style.display = "none";
   document.querySelector("#result").style.display = "block";
   document.querySelector("#options").style.display = "block";
   populateTitle();
 }
 
 function populateTitle() {
-  let title = myRecs[Math.floor(Math.random() * myRecs.length)];
-  document.querySelector("#rec").innerHTML = title;
+  let indx = Math.floor(Math.random() * myTitles.length);
+  let title = myTitles[indx],
+    id = myIds[indx];
+
+  document.querySelector("#recLink").innerHTML = title;
+
+  title = title.replace(/ /g, "-");
+  document.querySelector("#recLink").href += id + "/" + title;
 }
 
 function handleError(error) {
-  alert("Error, check console");
+  alert(`
+  Hey fuck off, the robot overlords couldn't find that. Follow this fucking checklist to make sure they don't fucking invade your dreams.
+  
+  1. Actually pick a fucking anime
+
+  2. Write the title more fucking accurately or completely
+
+  3. I'm SO fucking "sorry" for all this fucking profanity`);
   console.error(error);
 }

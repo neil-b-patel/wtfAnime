@@ -24,6 +24,7 @@ function getRecs() {
                             title {
                                 romaji
                                 english
+                                userPreferred
                             }
                         }
                     }
@@ -70,6 +71,7 @@ function handleRecData(data) {
     } else {
       myTitles.push(e.node.mediaRecommendation.title.romaji);
     }
+    myOfcTitles.push(e.node.mediaRecommendation.title.userPreferred);
     myIds.push(e.node.mediaRecommendation.id);
   });
 
@@ -83,12 +85,13 @@ function handleRecData(data) {
 function populateTitle() {
   let indx = Math.floor(Math.random() * myTitles.length);
   let title = myTitles[indx],
-    id = myIds[indx];
+    id = myIds[indx],
+    ofcTitle = myOfcTitles[indx];
 
   document.querySelector("#recLink").innerHTML = title;
 
-  title = title.replace(/ /g, "-");
-  document.querySelector("#recLink").href += id + "/" + title;
+  ofcTitle = ofcTitle.replace(/ /g, "-");
+  document.querySelector("#recLink").href += id + "/" + ofcTitle;
 }
 
 function handleError(error) {

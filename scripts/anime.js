@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 let myTitles = [],
   myIds = [],
-  myOfcTitles;
+  myOfcTitles = [];
 
 function getRecs() {
   let query = `query ($search: String) { # define which variables will be used in the query (id)

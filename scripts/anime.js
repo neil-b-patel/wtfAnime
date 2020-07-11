@@ -92,7 +92,7 @@ function populateTitle() {
   document.querySelector("#recLink").innerHTML = title;
 
   ofcTitle = ofcTitle.replace(/ /g, "-");
-  document.querySelector("#recLink").href += id + "/" + ofcTitle;
+  document.querySelector("#recLink").href = "https://anilist.co/anime/" + id + "/" + ofcTitle;
 }
 
 function handleError(error) {

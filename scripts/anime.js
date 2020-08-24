@@ -84,6 +84,8 @@ function handleRecData(data) {
 }
 
 function populateTitle() {
+  populateMsg();
+
   let indx = Math.floor(Math.random() * myTitles.length);
   let title = myTitles[indx],
     id = myIds[indx],
@@ -93,6 +95,15 @@ function populateTitle() {
 
   ofcTitle = ofcTitle.replace(/ /g, "-");
   document.querySelector("#recLink").href = "https://anilist.co/anime/" + id + "/" + ofcTitle;
+}
+
+function populateMsg() { 
+  const msgs = ["Waste your life watching : ", "Ignore your lover for : ", "Don't let your parents see you watching : ", "Name your first-born : ", "Doctors hate : ", "Shelter your kids from : ", "Repent sinner. Thy sin is : ", "Santa skips houses that watch : "]
+  
+  let indx = Math.floor(Math.random() * msgs.length);
+  let msg = msgs[indx];
+
+  document.querySelector("#msg").innerHTML = msg;
 }
 
 function handleError(error) {
